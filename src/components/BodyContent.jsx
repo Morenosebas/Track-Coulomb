@@ -1,5 +1,10 @@
 import { Component } from "react";
+import InputCrypto from "./InputCrypto";
+import CryptoBody from './HandlerCrypto'
 import './BodyContent.css'
+
+
+
 class BodyContent extends Component {
 
 
@@ -10,7 +15,8 @@ class BodyContent extends Component {
             <div className="BodyContent">
                 <div className="contenedor">
                     <div className="label">Cryptocurrency</div>
-                    <input type="text"/>
+                    <InputCrypto />
+                    <CryptoBody/>
                 </div>
             </div>
         );

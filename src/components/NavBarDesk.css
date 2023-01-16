@@ -15,7 +15,9 @@
     left: 10%;
     background-color: #000;
     position: absolute;
+ 
 }
+
 
 .Nav {
     width: 30%;
@@ -53,5 +55,16 @@
     position: absolute;
     align-items: center;
     padding: 2px 2px;
+    transition: transform 0.3s;
+    transition: filter 3s;
+    transform: scale(1);
 
 }
+
+
+.List>.BtnNavBar>a>img:hover{
+    transform: scale(1.2);
+    filter: brightness(150%);
+}
+
+

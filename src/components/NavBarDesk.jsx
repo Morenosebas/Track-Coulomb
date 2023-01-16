@@ -2,9 +2,6 @@ import { Component } from "react";
 import './NavBarDesk.css'
 class NavBarDesk extends Component {
 
-
-
-
     render() {
         return (
             <div className="Header">

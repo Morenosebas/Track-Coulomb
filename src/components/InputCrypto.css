@@ -1,0 +1,41 @@
+form{
+    position: relative;
+    margin-top: 20px;
+    top: 29%;
+    left: 20%;
+    height: 10%;
+    width: 65%;
+    background-color: #000;
+}
+
+input {
+    position: absolute;
+    height: 100%;
+    width: 85%;
+    color: #ffffff;
+}
+
+
+#Buscar{
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    height: 100%;
+    width: 10%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    transform: scale(1);
+
+}
+#Buscar:hover{
+    transform: scale(1.06);
+    filter: brightness(150%);
+}
+
+
+#Buscar:active{
+
+    transform: scale(0.98);
+
+}
