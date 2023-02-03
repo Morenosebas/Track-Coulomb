@@ -25,7 +25,7 @@ class CryptoBody extends Component {
   render() {
     const container = [];
     if (this.state.data === null) {
-      return <p onClick={-this.ObtenerData} className="ContenedorData" style={{ color: 'white', fontSize: '40px' }}>Cargando...</p>;
+      return <p onClick={this.ObtenerData} className="ContenedorData" style={{ color: 'white', fontSize: '40px' }}>Cargando...</p>;
     }
     else{
       for (let i in this.state.data.data) {
