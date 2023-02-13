@@ -1,4 +1,4 @@
-form{
+form {
     position: relative;
     margin-top: 20px;
     top: 29%;
@@ -16,7 +16,7 @@ input {
 }
 
 
-#Buscar{
+#Buscar {
     position: absolute;
     right: 0;
     background-color: #ffffff;
@@ -28,14 +28,45 @@ input {
     transform: scale(1);
 
 }
-#Buscar:hover{
+
+#Buscar:hover {
     transform: scale(1.06);
     filter: brightness(150%);
 }
 
 
-#Buscar:active{
+#Buscar:active {
 
     transform: scale(0.98);
 
+}
+
+.celdaBuscador {
+    position: relative;
+    top: 150%;
+    left: 0%;
+    height:100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+
+#searchData {
+
+    font-size: 16px;
+    color: blue;
+    background-color: red;
+    border: 1px solid #ccc;
+    padding: 5px;
+
+}
+
+#searchData option {
+
+    font-size: 16px;
+    color: blue;
+    background-color: red;
+    border: none;
+    padding: 5px;
+  
 }
