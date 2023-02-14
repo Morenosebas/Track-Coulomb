@@ -75,6 +75,7 @@ class InputCrypto extends Component {
         this.SetShowResult(false);
     }
     KeyDownHandler = (e) => {
+        console.log(e.key)
         if (e.key === 'ArrowDown') {
 
             try {
@@ -106,12 +107,20 @@ class InputCrypto extends Component {
         this.setState({ showResult: false })
     }
 
+    DataHandlerUp = (e) => { 
+        let inputChange = document.getElementById('Busquedad')
+        inputChange.value = 'hola'
+        // dataChange.te
+        let dataChange = document.querySelectorAll('#data')
+        
+        console.log(dataChange)
+    }
 
     render() {
         var div = [];
         if ((this.state.dataSearch))
             for (let i in this.state.dataSearch) {
-                div.push(<div key={i} style={{ backgroundColor: this.state.currentIndex == i ? '#ccc' : '#fff' }} className="celdaBuscador">{this.state.dataSearch[i]}</div>)
+                div.push(<div id={`data`} key={i} onClick={this.DataHandlerUp} style={{ backgroundColor: this.state.currentIndex == i ? '#ccc' : '#fff' }} className="celdaBuscador">{this.state.dataSearch[i]}</div>)
             }
 
         return (
