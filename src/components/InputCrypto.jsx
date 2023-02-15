@@ -20,51 +20,51 @@ class InputCrypto extends Component {
 
     HandleBusquedad = (e) => {
         // eslint-disable-next-line react/no-direct-mutation-state
-        this.setState({ dataSearchHandle: e.target.value })
-        const dataSearchHandle = this.state.dataSearchHandle;
-        setTimeout(() => {
-            if (dataSearchHandle.length > 2) {
-                this.SetShowResult(true)
-                if (this.state.cache[dataSearchHandle]) {
-                    console.log('data cache', this.state.cache)
-                    // Si el resultado ya está en caché, actualiza el estado del componente
-                    this.setState({
-                        dataSearch: this.state.cache[dataSearchHandle],
-                    });
-                } else {
-                    console.log('data update online')
-                    let nameAux = new RegExp(dataSearchHandle, 'i');
-                    // let symbolAux = new RegExp('^' + dataSearchHandle + '\\D','i');
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            const dataArray = data.data.reduce((acc, curr) => {
-                                const dataName = curr.name;
-                                const dataSlug = curr.slug;
-                                const dataSymbol = curr.symbol;
-                                if ((nameAux.test(dataName)) || (nameAux.test(dataSlug)) || (nameAux.test(dataSymbol))) {
-                                    acc.unshift(dataName);
-                                }
-                                return acc;
-                            }, []);
-                            // Almacena el resultado de la búsqueda en caché
-                            const cache = {
-                                ...this.state.cache,
-                                [dataSearchHandle]: dataArray,
-                            };
-                            this.setState({
-                                dataSearch: dataArray,
-                                cache: cache,
-                            });
-                            console.log('data data', this.state.dataSearch)
-                            this.SetShowResult(true)
-                        });
-                }
+        const dataSearchHandle = e.target.value
+        // this.setState({ dataSearchHandle: dataSearchHandle })
+
+        console.log(dataSearchHandle, 'this is datasearchhandle')
+        if (dataSearchHandle.length > 2) {
+            this.SetShowResult(true)
+            if (this.state.cache[dataSearchHandle]) {
+                console.log('data cache', this.state.cache)
+                // Si el resultado ya está en caché, actualiza el estado del componente
+                this.setState({
+                    dataSearch: this.state.cache[dataSearchHandle],
+                });
             } else {
-                this.setState({ dataSearch: [] })
-                this.SetShowResult(false)
+                console.log('data update online')
+                let nameAux = new RegExp(dataSearchHandle, 'i');
+                // let symbolAux = new RegExp('^' + dataSearchHandle + '\\D','i');
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const dataArray = data.data.reduce((acc, curr) => {
+                            const dataName = curr.name;
+                            const dataSlug = curr.slug;
+                            const dataSymbol = curr.symbol;
+                            if ((nameAux.test(dataName)) || (nameAux.test(dataSlug)) || (nameAux.test(dataSymbol))) {
+                                acc.unshift(dataName);
+                            }
+                            return acc;
+                        }, []);
+                        // Almacena el resultado de la búsqueda en caché
+                        const cache = {
+                            ...this.state.cache,
+                            [dataSearchHandle]: dataArray,
+                        };
+                        this.setState({
+                            dataSearch: dataArray,
+                            cache: cache,
+                        });
+                        this.SetShowResult(true)
+                    });
+                console.log('data data', this.state.dataSearch)
             }
-        }, 500)
+        } else {
+            this.setState({ dataSearch: [] })
+            this.SetShowResult(false)
+        }
 
     }
 
@@ -97,6 +97,7 @@ class InputCrypto extends Component {
             try {
                 if (this.state.currentIndex != -1) {
                     e.target.value = this.state.dataSearch[this.state.currentIndex]
+                    this.setState({ dataSearch: undefined })
                 }
                 console.log('desde el enter')
             } catch (error) { console.error(error) }
@@ -107,13 +108,12 @@ class InputCrypto extends Component {
         this.setState({ showResult: false })
     }
 
-    DataHandlerUp = (e) => { 
+    DataHandlerUp = (e) => {
         let inputChange = document.getElementById('Busquedad')
-        inputChange.value = 'hola'
-        // dataChange.te
-        let dataChange = document.querySelectorAll('#data')
-        
-        console.log(dataChange)
+        inputChange.value = e.target.innerHTML
+        // this.setState({ dataSearch: this.state.cache[inputChange.value] })
+        this.BuscarData(e)
+        // console.log(dataChange)
     }
 
     render() {

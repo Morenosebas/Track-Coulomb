@@ -15,11 +15,24 @@ class CryptoBody extends Component {
   ObtenerBusquedad = (Buscar) => {
     this.setState({ buscar: Buscar.toUpperCase() })
     console.log('Busquedad desde cryptobody', Buscar)
+    this.ObtenerData()
   }
-
+  componentDidMount() {
+    console.log('Cryptobody montado')
+  }
   ObtenerData = (e) => {
     // setInterval(() => {
-    e.preventDefault();
+    //excepcion de codigo
+    try {
+      if (e.preventDefault()) {
+        e.preventDefault();
+      }
+      else {
+        throw new Error("Error con el preventDefault");
+      }
+    } catch (error) {
+    }
+
     fetch(url)
       .then(response => response.json())
       .then(data => {
