@@ -1,8 +1,6 @@
 import { Component } from "react";
 import './InputCrypto.css'
-const url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=7a2265da-55d4-4fce-9ee9-9721b6e17845';
-
-
+import url from "../controller/url";
 
 class InputCrypto extends Component {
 
@@ -15,11 +13,10 @@ class InputCrypto extends Component {
     };
 
     SetShowResult = (value) => {
-        this.setState({ showResult: value, currentIndex: -1 });
+        this.setState({ showResult: value });
     }
 
     HandleBusquedad = (e) => {
-        // eslint-disable-next-line react/no-direct-mutation-state
         const dataSearchHandle = e.target.value
         // this.setState({ dataSearchHandle: dataSearchHandle })
 
@@ -27,15 +24,12 @@ class InputCrypto extends Component {
         if (dataSearchHandle.length > 2) {
             this.SetShowResult(true)
             if (this.state.cache[dataSearchHandle]) {
-                console.log('data cache', this.state.cache)
-                // Si el resultado ya está en caché, actualiza el estado del componente
                 this.setState({
                     dataSearch: this.state.cache[dataSearchHandle],
                 });
             } else {
                 console.log('data update online')
                 let nameAux = new RegExp(dataSearchHandle, 'i');
-                // let symbolAux = new RegExp('^' + dataSearchHandle + '\\D','i');
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
@@ -48,7 +42,6 @@ class InputCrypto extends Component {
                             }
                             return acc;
                         }, []);
-                        // Almacena el resultado de la búsqueda en caché
                         const cache = {
                             ...this.state.cache,
                             [dataSearchHandle]: dataArray,
@@ -57,12 +50,10 @@ class InputCrypto extends Component {
                             dataSearch: dataArray,
                             cache: cache,
                         });
-                        this.SetShowResult(true)
                     });
-                console.log('data data', this.state.dataSearch)
             }
         } else {
-            this.setState({ dataSearch: [] })
+            this.setState({ dataSearch: [], currentIndex: -1 })
             this.SetShowResult(false)
         }
 
@@ -84,8 +75,6 @@ class InputCrypto extends Component {
                 }
             } catch (error) { console.error(error) }
 
-            console.log(e.key)
-            console.log(this.state.currentIndex)
         } else if (e.key === 'ArrowUp') {
             try {
                 if (this.state.currentIndex > -1 && this.state.currentIndex <= (this.state.dataSearch).length - 1) {
@@ -95,11 +84,14 @@ class InputCrypto extends Component {
 
         } else if (e.key === 'Enter') {
             try {
-                if (this.state.currentIndex != -1) {
+                e.preventDefault()
+                if (this.state.currentIndex !== -1) {
                     e.target.value = this.state.dataSearch[this.state.currentIndex]
-                    this.setState({ dataSearch: undefined })
+                    this.setState({ dataSearch: undefined, currentIndex: -1 })
+                    this.BuscarData(e)
+                } else {
+                    // this.setState({})
                 }
-                console.log('desde el enter')
             } catch (error) { console.error(error) }
         }
     }
@@ -108,29 +100,35 @@ class InputCrypto extends Component {
         this.setState({ showResult: false })
     }
 
-    DataHandlerUp = (e) => {
+    DataHandlerUp = async (e) => {
         let inputChange = document.getElementById('Busquedad')
         inputChange.value = e.target.innerHTML
-        // this.setState({ dataSearch: this.state.cache[inputChange.value] })
+        if (this.state.currentIndex !== -1) {
+            await this.setState({ dataSearch: undefined })
+        }
         this.BuscarData(e)
-        // console.log(dataChange)
+        await this.setState({ dataSearch: this.state.cache[inputChange.value] })
+        // console.log(dataOption)
     }
 
     render() {
-        var div = [];
+        let div = [];
         if ((this.state.dataSearch))
             for (let i in this.state.dataSearch) {
-                div.push(<div id={`data`} key={i} onClick={this.DataHandlerUp} style={{ backgroundColor: this.state.currentIndex == i ? '#ccc' : '#fff' }} className="celdaBuscador">{this.state.dataSearch[i]}</div>)
+                div.push(<div key={`data-${i}`} onClick={this.DataHandlerUp}
+                    style={{ borderRadius: i == this.state.dataSearch.length - 1 ? '0 0 5px 5px' : '0' }}
+                    className={this.state.currentIndex == i ? "celdaBuscadorActive" : "celdaBuscador"}> {this.state.dataSearch[i]}</div >)
             }
 
         return (
             <>
+                <div className="label"><b style={{ backgroundColor: "transparent" }}>Cryptocurrency</b></div>
                 <form id="MyForm" className="Form">
                     <input autoComplete="off" type="text" onChange={this.HandleBusquedad} name="Busquedad" id="Busquedad" placeholder="Escribe el nombre o la abreviatura: "
                         onFocus={() => this.SetShowResult(true)} onBlur={() => setTimeout(() => this.SetShowResult(false), 200)}
                         onKeyDown={(e) => this.KeyDownHandler(e)}
                     />
-                    <button onClickCapture={this.props.myOnClick} onClick={this.BuscarData} type="submit" id={'Buscar'} >Buscar</button>
+                    <button onClick={this.props.myOnClick} onClickCapture={this.BuscarData} type="button" id={'Buscar'} >Buscar</button>
                     {this.state.showResult &&
                         div
                     }

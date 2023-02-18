@@ -47,7 +47,7 @@
 }
 
 
-.List>.BtnNavBar>a>img {
+.List>.BtnNavBar>a>img, button {
     /* outline: 1px solid red; */
     width: 50px;
     background-color: #000;

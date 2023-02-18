@@ -14,8 +14,6 @@ class BodyContent extends Component {
         return (
             <div className="BodyContent">
                 <div className="contenedor">
-                    <div className="label">Cryptocurrency</div>
-                    {/* <InputCrypto /> */}
                     <CryptoBody/>
                 </div>
             </div>

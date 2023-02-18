@@ -5,7 +5,7 @@ form {
     left: 20%;
     height: 10%;
     width: 65%;
-    background-color: #000;
+    background-color: transparent;
 }
 
 input {
@@ -21,7 +21,7 @@ input {
     right: 0;
     background-color: #ffffff;
     height: 100%;
-    width: 10%;
+    width: 12%;
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.3s;
@@ -43,30 +43,29 @@ input {
 
 .celdaBuscador {
     position: relative;
-    top: 150%;
+    top: 140%;
     left: 0%;
     height:100%;
     width: 100%;
-    background-color: #fff;
+    z-index: 1;
+    color: #fff;
+    cursor: pointer;
+    background-color: #3b3a3a;
 }
 
-
-#searchData {
-
-    font-size: 16px;
-    color: blue;
-    background-color: red;
-    border: 1px solid #ccc;
-    padding: 5px;
-
+.celdaBuscador:hover{
+    background-color: #979595;
+    color: #000;
 }
 
-#searchData option {
-
-    font-size: 16px;
-    color: blue;
-    background-color: red;
-    border: none;
-    padding: 5px;
-  
+.celdaBuscadorActive{
+    position: relative;
+    top: 140%;
+    left: 0%;
+    height:100%;
+    width: 100%;
+    z-index: 1;
+    color: #000;
+    cursor: pointer;
+    background-color: #979595;
 }
