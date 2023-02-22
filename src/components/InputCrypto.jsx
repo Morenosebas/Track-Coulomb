@@ -13,7 +13,7 @@ class InputCrypto extends Component {
     };
 
     SetShowResult = (value) => {
-        this.setState({ showResult: value });
+        this.setState({ showResult: value, currentIndex: -1 });
     }
 
     HandleBusquedad = (e) => {
@@ -29,7 +29,7 @@ class InputCrypto extends Component {
                 });
             } else {
                 console.log('data update online')
-                let nameAux = new RegExp(dataSearchHandle, 'i');
+                let nameAux = new RegExp(`${dataSearchHandle}\\s*`, 'i');
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
@@ -44,7 +44,7 @@ class InputCrypto extends Component {
                         }, []);
                         const cache = {
                             ...this.state.cache,
-                            [dataSearchHandle]: dataArray,
+                            [dataSearchHandle]: dataArray.reverse(),
                         };
                         this.setState({
                             dataSearch: dataArray,
@@ -60,7 +60,7 @@ class InputCrypto extends Component {
     }
 
 
-    BuscarData = (e) => {
+    BuscarData = () => {
         let data = document.getElementById('MyForm')
         this.props.Buscar(data.elements.Busquedad.value);
         this.SetShowResult(false);
@@ -88,9 +88,9 @@ class InputCrypto extends Component {
                 if (this.state.currentIndex !== -1) {
                     e.target.value = this.state.dataSearch[this.state.currentIndex]
                     this.setState({ dataSearch: undefined, currentIndex: -1 })
-                    this.BuscarData(e)
+                    this.BuscarData()
                 } else {
-                    // this.setState({})
+                    this.BuscarData()
                 }
             } catch (error) { console.error(error) }
         }
@@ -100,14 +100,21 @@ class InputCrypto extends Component {
         this.setState({ showResult: false })
     }
 
-    DataHandlerUp = async (e) => {
+    DataHandlerUp = (e) => {
+        // let data = document.getElementById('MyForm')
         let inputChange = document.getElementById('Busquedad')
-        inputChange.value = e.target.innerHTML
-        if (this.state.currentIndex !== -1) {
-            await this.setState({ dataSearch: undefined })
-        }
-        this.BuscarData(e)
-        await this.setState({ dataSearch: this.state.cache[inputChange.value] })
+        // data.elements.Busquedad.value = e.target.innerHTML
+        const textContent = e.target.innerHTML;
+        inputChange.value = textContent.trimStart();
+        this.SetShowResult(false)
+        // await this.BuscarData();
+        this.props.Buscar(inputChange.value);
+        // this.SetShowResult(false);
+        // if (this.state.currentIndex !== -1) {
+        //     this.setState({ dataSearch: undefined })
+        // }
+        // this.setState({ dataSearch: this.state.cache[inputChange.value] })
+        // this.BuscarData();
         // console.log(dataOption)
     }
 
@@ -117,18 +124,22 @@ class InputCrypto extends Component {
             for (let i in this.state.dataSearch) {
                 div.push(<div key={`data-${i}`} onClick={this.DataHandlerUp}
                     style={{ borderRadius: i == this.state.dataSearch.length - 1 ? '0 0 5px 5px' : '0' }}
-                    className={this.state.currentIndex == i ? "celdaBuscadorActive" : "celdaBuscador"}> {this.state.dataSearch[i]}</div >)
+                    className={this.state.currentIndex == i ? "celdaBuscadorActive" : "celdaBuscador"}
+                    onMouseEnter={() => { this.setState({ currentIndex: i }) }}
+                    onMouseLeave={() => { this.setState({ currentIndex: -1 }) }}
+                > {this.state.dataSearch[i]}</div >)
             }
 
         return (
             <>
                 <div className="label"><b style={{ backgroundColor: "transparent" }}>Cryptocurrency</b></div>
-                <form id="MyForm" className="Form">
+                <form onSubmit={this.BuscarData} id="MyForm" className="Form">
                     <input autoComplete="off" type="text" onChange={this.HandleBusquedad} name="Busquedad" id="Busquedad" placeholder="Escribe el nombre o la abreviatura: "
-                        onFocus={() => this.SetShowResult(true)} onBlur={() => setTimeout(() => this.SetShowResult(false), 200)}
+                        onFocus={() => this.SetShowResult(true)}
+                        onBlur={() => setTimeout(() => this.SetShowResult(false), 500)}
                         onKeyDown={(e) => this.KeyDownHandler(e)}
                     />
-                    <button onClick={this.props.myOnClick} onClickCapture={this.BuscarData} type="button" id={'Buscar'} >Buscar</button>
+                    <button onClickCapture={this.props.myOnClick} onClick={this.BuscarData} type="button" id={'Buscar'} >Buscar</button>
                     {this.state.showResult &&
                         div
                     }

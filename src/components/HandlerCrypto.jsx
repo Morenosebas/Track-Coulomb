@@ -15,40 +15,38 @@ class CryptoBody extends Component {
 
   ObtenerBusquedad = (Buscar) => {
     this.setState({ buscar: Buscar.toUpperCase() })
-    console.log('Busquedad desde cryptobody', Buscar)
+    console.log('Busquedad desde cryptobody', this.state.buscar)
+    this.ObtenerData()
   }
   componentDidMount() {
     console.log('Cryptobody montado')
+
   }
   componentDidUpdate(prevProp, prepState) {
-    if (prepState.buscar !== this.state.buscar) {
-      this.ObtenerData()
+    if (this.state.buscar !== '') {
+      console.log("update", this.state.buscar)
+      console.log("update", this.state.data)
     }
   }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log("next state:", nextState.buscar, " this.state :", this.state.buscar)
+  //   return nextState.buscar !== this.state.buscar && this.state.buscar !== 0;
+  // }
+
 
   //error aca en la funcion Obtener Data
-  ObtenerData = () => {
-    // setInterval(() => {
-    //excepcion de codigo
-    // e.preventDefault();
-    // try {
-    //   if (e.preventDefault()) {
-    //     e.preventDefault();
-    //   }
-    //   else {
-    //     throw new Error("Error con el preventDefault");
-    //   }
-    // } catch (error) {
-    // }
+  ObtenerData = (e) => {
+    // this.setState({ data: null })
+    console.log("ObtenerData....")
     fetch(url)
       .then(response => response.json())
       .then(data => {
+        console.log("ObtenerDataThen....")
         this.setState({ data })
       })
       .catch(error => {
         console.error('Error al obtener la data:', error);
       });
-    // }, 10000)
   }
 
 

@@ -6,16 +6,16 @@
 }
 
 .contenedor {
-    width: 70%;
-    height: 50%;
+    width: 99%;
+    height: 65%;
     background-color: #000;
     position: fixed;
-    top: 30%;
+    top: 26%;
     left: 0;
     right: 0;
     margin: auto;
-    border-radius: 90px 0 90px 0;
-    box-shadow: 0px 10px 15px #000000;
+    border-radius: 5px 5px 5px 5px ;
+    box-shadow: 0px 40px 40px 0 #000000;
     display: inline-block;
 
 }
