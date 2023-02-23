@@ -134,9 +134,9 @@ class InputCrypto extends Component {
             <>
                 <div className="label"><b style={{ backgroundColor: "transparent" }}>Cryptocurrency</b></div>
                 <form onSubmit={this.BuscarData} id="MyForm" className="Form">
-                    <input autoComplete="off" type="text" onChange={this.HandleBusquedad} name="Busquedad" id="Busquedad" placeholder="Escribe el nombre o la abreviatura: "
+                    <input  autoComplete="off" type="text" onChange={this.HandleBusquedad} name="Busquedad" id="Busquedad" placeholder="Escribe el nombre o la abreviatura: "
                         onFocus={() => this.SetShowResult(true)}
-                        onBlur={() => setTimeout(() => this.SetShowResult(false), 500)}
+                        onBlur={() => setTimeout(() => this.SetShowResult(false), 150)}
                         onKeyDown={(e) => this.KeyDownHandler(e)}
                     />
                     <button onClickCapture={this.props.myOnClick} onClick={this.BuscarData} type="button" id={'Buscar'} >Buscar</button>
