@@ -8,17 +8,18 @@ form {
     background-color: transparent;
 }
 
-input {
+#Busquedad {
     position: absolute;
     height: 100%;
     width: 88%;
+    box-shadow: 0px 3px 0px 0px rgb(255, 255, 255);
     border: 0;
     background-color: transparent;
     color: #ffffff;
 }
 
-input:focus {
-    transition: all 1s;
+#Busquedad:focus {
+    transition: all linear 0.5s;
     background-color: transparent;
     outline: 0;
     box-shadow: 0px 3px 0px 0px rgb(104, 237, 255);

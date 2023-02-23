@@ -11,10 +11,12 @@ class CryptoBody extends Component {
   state = {
     data: null,
     buscar: '',
+    loading: false,
   };
 
   ObtenerBusquedad = (Buscar) => {
-    this.setState({ buscar: Buscar.toUpperCase() })
+
+    this.setState({ buscar: Buscar.toUpperCase(), loading: true })
     console.log('Busquedad desde cryptobody', this.state.buscar)
     this.ObtenerData()
   }
@@ -42,7 +44,7 @@ class CryptoBody extends Component {
       .then(response => response.json())
       .then(data => {
         console.log("ObtenerDataThen....")
-        this.setState({ data })
+        this.setState({ data, loading: false })
       })
       .catch(error => {
         console.error('Error al obtener la data:', error);
@@ -51,10 +53,17 @@ class CryptoBody extends Component {
 
 
   render() {
-    const { data, buscar } = this.state;
+    const { data, buscar, loading } = this.state;
 
     if (!data) {
-      return <InputCrypto Buscar={this.ObtenerBusquedad} myOnClick={this.ObtenerData} />;
+      return <><InputCrypto Buscar={this.ObtenerBusquedad} myOnClick={this.ObtenerData} />
+        {loading && <div className="divBeforeData">
+          <div className="spinner-border  text-success  bg-transparent" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>}
+
+      </>;
     }
 
     const Nameaux = buscar ? new RegExp(`^${buscar}$`, 'i') : null;

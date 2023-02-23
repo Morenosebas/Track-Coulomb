@@ -1,16 +1,23 @@
 .ContenedorData {
     width: 65%;
     top: 30%;
-    margin: auto;    
+    margin: auto;
     height: 20%;
     position: relative;
     background-color: transparent;
-    display: 	flex;
+    display: flex;
 
 }
 
 
-
+.divBeforeData {
+    position: relative;
+    top: 55%;
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; 
+    background-color: transparent;
+}
 
 .DataCrypto {
     list-style: none;
